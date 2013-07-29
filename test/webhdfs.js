@@ -1,6 +1,7 @@
 
 var should = require('should');
 
+var HDFSTestDir = '/test';
 
 describe('WebHDFSClient', function () {
 
@@ -10,7 +11,7 @@ describe('WebHDFSClient', function () {
 
         it('should return `true` if the directory was created', function (done) {
 
-            client.mkdirs('/test', function (err, success) {
+            client.mkdirs(HDFSTestDir, function (err, success) {
 
                 should.not.exist(err);
                 should.exist(success);
@@ -29,7 +30,7 @@ describe('WebHDFSClient', function () {
 
         it('should return information about the directory', function (done) {
 
-            client.getFileStatus('/test', function (err, status) {
+            client.getFileStatus(HDFSTestDir, function (err, status) {
 
                 should.not.exist(err);
                 should.exist(status);
@@ -48,7 +49,7 @@ describe('WebHDFSClient', function () {
 
         it('should return the path to the new file', function (done) {
 
-            client.create('/test/foo.txt', '{"foo":"bar",', function (err, path) {
+            client.create(HDFSTestDir + '/foo.txt', '{"foo":"bar",', function (err, path) {
 
                 should.not.exist(err);
                 should.exist(path);
@@ -65,7 +66,7 @@ describe('WebHDFSClient', function () {
 
         it('should return `true` if the file was renamed', function (done) {
 
-            client.rename('/test/foo.txt', '/test/bar.txt', function (err, success) {
+            client.rename(HDFSTestDir + '/foo.txt', HDFSTestDir + '/bar.txt', function (err, success) {
 
                 should.not.exist(err);
                 should.exist(success);
@@ -84,7 +85,7 @@ describe('WebHDFSClient', function () {
 
         it('should return `true` if the data was appended', function (done) {
 
-            client.append('/test/bar.txt', '"bar": "baz"}', function (err, success) {
+            client.append(HDFSTestDir + '/bar.txt', '"bar": "baz"}', function (err, success) {
 
                 should.not.exist(err);
                 should.exist(success);
@@ -103,7 +104,7 @@ describe('WebHDFSClient', function () {
 
         it('should return summary of directory content', function (done) {
 
-            client.getContentSummary('/test', function (err, summary) {
+            client.getContentSummary(HDFSTestDir, function (err, summary) {
 
                 should.not.exist(err);
                 should.exist(summary);
@@ -122,7 +123,7 @@ describe('WebHDFSClient', function () {
 
         it('should return a file checksum', function (done) {
 
-            client.getFileChecksum('/test/bar.txt', function (err, checksum) {
+            client.getFileChecksum(HDFSTestDir + '/bar.txt', function (err, checksum) {
 
                 should.not.exist(err);
                 should.exist(checksum);
@@ -141,7 +142,7 @@ describe('WebHDFSClient', function () {
 
         it('should return the files content', function (done) {
 
-            client.open('/test/bar.txt', function (err, data) {
+            client.open(HDFSTestDir + '/bar.txt', function (err, data) {
 
                 should.not.exist(err);
                 should.exist(data);
@@ -160,7 +161,7 @@ describe('WebHDFSClient', function () {
 
         it('should return `true` if the directory was deleted', function (done) {
 
-            client.del('/test', { recursive: true }, function (err, success) {
+            client.del(HDFSTestDir, { recursive: true }, function (err, success) {
 
                 should.not.exist(err);
                 should.exist(success);
